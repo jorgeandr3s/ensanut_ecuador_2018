@@ -10,8 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Acerca de
-
-Esta es una guía en R para trabajar con la Encuesta Nacional de Salud en Ecuador. 
+Esta es una guía en R para descargar los datos de la Encuesta Nacional de Salud en Ecuador. 
 Si quieres saber más sobre esta encuesta, haz clic en el triángulo verde abajo a la derecha.
 ```{r URL acerca de ensanut, eval=FALSE}
 browseURL("https://www.ecuadorencifras.gob.ec/salud-salud-reproductiva-y-nutricion/")
@@ -23,14 +22,19 @@ Todos los archivos fueron tomados del enlace que ves abajo, pero los he subido a
 browseURL("https://www.ecuadorencifras.gob.ec/documentos/web-inec/Estadisticas_Sociales/ENSANUT/ENSANUT_2018/")
 ```
 
+
 ## Guía para importación e integración de datos
-Abajo encontrarán un guión para importar cada base de datos por separado, la razón de hacerlo así es para que la computadora no se trabe con tantos archivos. 
+Abajo encontrarán un guión para importar cada base de datos por separado, pero si ejecutas la razón de hacerlo así es para que la computadora no se trabe con tantos archivos. 
+
+
 ```{r IMPORTAR_DATOS echo=FALSE}
 install.packages("RCurl")
 library(RCurl) #Para usar getURL()
-options("scipen"=100) #Para que R no transforme los identificadores a exponenciales
+options("scipen"=999, ) #Para que R no transforme los identificadores a exponenciales
 
-#ARCHIVO PERSONAS (Esta base de datos se puede unir con cualquier otra mediante id_viv, id_hogar, id_per)
+
+
+#ARCHIVO PERSONAS
 x1 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/CSV/1_BDD_ENS2018_f1_personas.csv")
 Personas <- read.csv(text = x1, numerals = "no.loss", encoding = "UTF-8")
 x1 <- NULL
@@ -75,8 +79,7 @@ x9 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecua
 Des_Inf <- read.csv(text = x9, numerals = "no.loss", encoding = "UTF-8")
 x9 <- NULL
 
-#EXPORT ALL DATASETS
-save.image("~/GitHub/ensanut_ecuador_2019/datos/R/ENSANUT_EC_2018.RData")
+save.image()
 
 ```
 
