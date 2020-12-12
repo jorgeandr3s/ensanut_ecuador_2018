@@ -1,0 +1,83 @@
+---
+title: "ENSANUT EC 2019"
+author: "Jorge Andrés Delgado-Ron"
+date: "11/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Acerca de
+
+Esta es una guía en R para trabajar con la Encuesta Nacional de Salud en Ecuador. 
+Si quieres saber más sobre esta encuesta, haz clic en el triángulo verde abajo a la derecha.
+```{r URL acerca de ensanut, eval=FALSE}
+browseURL("https://www.ecuadorencifras.gob.ec/salud-salud-reproductiva-y-nutricion/")
+```
+
+Todos los archivos fueron tomados del enlace que ves abajo, pero los he subido a github para poder trabajarlos desde R Studio:
+
+```{r URL fuentes ensanut, eval=FALSE}
+browseURL("https://www.ecuadorencifras.gob.ec/documentos/web-inec/Estadisticas_Sociales/ENSANUT/ENSANUT_2018/")
+```
+
+## Guía para importación e integración de datos
+Abajo encontrarán un guión para importar cada base de datos por separado, la razón de hacerlo así es para que la computadora no se trabe con tantos archivos. 
+```{r IMPORTAR_DATOS echo=FALSE}
+install.packages("RCurl")
+library(RCurl) #Para usar getURL()
+options("scipen"=100) #Para que R no transforme los identificadores a exponenciales
+
+#ARCHIVO PERSONAS (Esta base de datos se puede unir con cualquier otra mediante id_viv, id_hogar, id_per)
+x1 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/1_BDD_ENS2018_f1_personas.csv")
+Personas <- read.csv(text = x1, numerals = "no.loss", encoding = "UTF-8")
+x1 <- NULL
+
+#ARCHIVO HOGAR
+x2 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/2_BDD_ENS2018_f1_hogar.csv")
+Hogar <- read.csv(text = x2, numerals = "no.loss", encoding = "UTF-8")
+x2 <- NULL
+
+#ARCHIVO ETIQUETA
+x3 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/3_BDD_ENS2018_f1_etiqueta.csv")
+Etiqueta <- read.csv(text = x3, numerals = "no.loss", encoding = "UTF-8")
+x3 <- NULL
+
+# ARCHIVO Mujeres en Edad Fértil
+x4 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/4_BDD_ENS2018_f2_mef.csv")
+Mef <- read.csv(text = x4, numerals = "no.loss", encoding = "UTF-8")
+x4 <- NULL
+
+#ARCHIVO LACTANCIA
+x5 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/5_BDD_ENS2018_f2_lactancia.csv")
+Lactancia <- read.csv(text = x5, numerals = "no.loss", encoding = "UTF-8")
+x5 <- NULL
+
+#ARCHIVO SALUD NIÑEZ
+x6 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/6_BDD_ENS2018_f2_salud_ninez.csv")
+Ninez <- read.csv(text = x6, numerals = "no.loss", encoding = "UTF-8")
+x6 <- NULL
+
+#ARCHIVO Salud sexual y reproductiva en hombres
+x7 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/7_BDD_ENS2018_f3_ssrh.csv")
+SSRH <- read.csv(text = x7, numerals = "no.loss", encoding = "UTF-8")
+x7 <- NULL
+
+#ARCHIVO Factores de riesgo
+x8 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/8_BDD_ENS2018_f4_fact_riesgo.csv")
+Fact_riesgo <- read.csv(text = x8, numerals = "no.loss", encoding = "UTF-8")
+x8 <- NULL
+
+#ARCHIVO DESNUTRICIÓN INFANTIL
+x9 <- getURL("https://media.githubusercontent.com/media/jorgeandr3s/ensanut_ecuador_2018/master/datos/9_BDD_ENS2018_f5_des_inf.csv")
+Des_Inf <- read.csv(text = x9, numerals = "no.loss", encoding = "UTF-8")
+x9 <- NULL
+
+#EXPORT ALL DATASETS
+save.image("~/GitHub/ensanut_ecuador_2019/datos/R/ENSANUT_EC_2018.RData")
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
